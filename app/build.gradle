@@ -1,0 +1,101 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+repositories {
+    mavenCentral()
+    google()
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.viktorpetrovski.moviesgo"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        vectorDrawables.useSupportLibrary = true
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+
+
+        debug {
+            buildConfigField "String", "MOVIES_DB_API_KEY", '"0baca271e9f617c072850c354f3b6245"'
+            buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/tv/"'
+        }
+
+        release {
+            buildConfigField "String", "MOVIES_DB_API_KEY", '"0baca271e9f617c072850c354f3b6245"'
+            buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/tv/"'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+
+kapt {
+    generateStubs = true
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+
+    implementation 'com.android.support:support-v4:26.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+
+    //Kotlin Anko
+//    implementation "org.jetbrains.anko:anko-commons:$anko_version"
+//    implementation "org.jetbrains.anko:anko-sdk25-coroutines:$anko_version"
+//    implementation "org.jetbrains.anko:anko-appcompat-v7-coroutines:$anko_version"
+
+    // dependency injection
+    implementation "com.google.dagger:dagger:$rootProject.dagger2Version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    implementation "com.google.dagger:dagger-android:$rootProject.dagger2Version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
+    implementation "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
+
+    // reactive
+    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjava2Version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
+
+    // font
+    implementation "uk.co.chrisjenx:calligraphy:$rootProject.calligraphyVersion"
+
+    // Glide
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+    implementation "com.github.bumptech.glide:okhttp3-integration:$glideVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+
+//    implementation "com.github.bumptech.glide:glide:$glideVersion"
+//    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+
+    //Networking ( Retrofit )
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit"
+
+    // architecture components
+    implementation "android.arch.lifecycle:runtime:$arch_runtime_version"
+    implementation "android.arch.lifecycle:extensions:$arch_version"
+    implementation "android.arch.lifecycle:reactivestreams:$arch_version"
+    kapt "android.arch.lifecycle:compiler:$arch_version"
+
+    //Logging Interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttp3Interceptor"
+}
