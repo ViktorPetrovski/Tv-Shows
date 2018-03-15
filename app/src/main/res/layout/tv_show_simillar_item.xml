@@ -62,12 +62,14 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:textSize="16sp"
+                android:layout_toLeftOf="@+id/tv_rating"
+                android:layout_toStartOf="@+id/tv_rating"
                 android:shadowColor="@color/text_shadow"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 android:shadowRadius="2"
                 android:textColor="@android:color/white"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageView2" />
 

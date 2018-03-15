@@ -12,6 +12,6 @@ class TvShowsRepository @Inject constructor(private val tvShowService: TvShowSer
 
     fun loadTvShowDetails(tvShowId : Long) = tvShowService.getTvShowDetails(tvShowId)
 
-    fun loadSimilarTvShows(tvShowId : Long) = tvShowService.getSimilarTvShows(tvShowId)
+    fun loadSimilarTvShows(tvShowId : Long, page : Int) = tvShowService.getSimilarTvShows(tvShowId,page = page)
 
 }

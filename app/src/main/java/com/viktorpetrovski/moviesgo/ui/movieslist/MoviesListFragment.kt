@@ -59,9 +59,6 @@ class MoviesListFragment : Fragment(), Injectable {
         setUpRecyclerView()
 
         viewModel.tvShowsListResponse.observe(this) {
-            it?.let{
-                moviesListAdapter.addItems( it.showsList )
-            }
             moviesListAdapter.mList = viewModel.tvShowsList
         }
 

@@ -33,6 +33,6 @@ interface TvShowService {
      * Get a list of similar TV shows. These items are assembled by looking at keywords and genres.
      * */
     @GET("{tv_id}/similar")
-    fun getSimilarTvShows(@Path("tv_id") tvId : Long, @Query(value = "api_key") api_key: String =  BuildConfig.MOVIES_DB_API_KEY) : Observable<TvShowListResponse>
+    fun getSimilarTvShows(@Path("tv_id") tvId : Long, @Query(value = "api_key") api_key: String =  BuildConfig.MOVIES_DB_API_KEY,@Query(value = "page") page : Int) : Observable<TvShowListResponse>
 
 }

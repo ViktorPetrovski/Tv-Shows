@@ -17,22 +17,45 @@ class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepos
     var tvShow = MutableLiveData<TvShow>()
     var similarTvShowsList = MutableLiveData<List<TvShow>>()
 
-    fun getTvShowDetails(tvShowId: Long) {
+    var tvShowList = ArrayList<TvShow>()
+
+    //Pagination variables for Similar TVShows
+    var isLoading = MutableLiveData<Boolean>()
+    var showError = MutableLiveData<Boolean>()
+    private val startingPagination = 1
+
+    var page = startingPagination
+    private var tvShowId : Long = 0
+
+    fun setTvShowId(tvShowId: Long){
+        this.tvShowId = tvShowId
+    }
+
+    fun getTvShowDetails() {
         tvShowsListingRepository.loadTvShowDetails(tvShowId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleResults, this::handleError)
     }
 
-    fun getSimilarTvShows(tvShowId: Long){
-        tvShowsListingRepository.loadSimilarTvShows(tvShowId)
+    fun getSimilarTvShows(){
+        isLoading.value = true
+        tvShowsListingRepository.loadSimilarTvShows(tvShowId,page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::handleSimilarTvShowResponse, this::handleError)
     }
 
     private fun handleSimilarTvShowResponse( response : TvShowListResponse){
-        similarTvShowsList.value = response.showsList
+        if(page == startingPagination) {
+            tvShowList = ArrayList()
+        }
+
+        page++
+        tvShowList.addAll(response.showsList)
+        similarTvShowsList.value = tvShowList
+        isLoading.value = false
+
     }
 
     private fun handleResults(response: TvShow) {
@@ -41,7 +64,8 @@ class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepos
     }
 
     private fun handleError(t: Throwable) {
-
+        isLoading.value = false
+        showError.value = true
     }
 
 

@@ -19,9 +19,10 @@ class TvShowViewModel @Inject constructor( private val repository: TvShowsReposi
     val tvShowsPage = MutableLiveData<Int>()
     var tvShowsListResponse = MutableLiveData<TvShowListResponse>()
     var tvShowsList = ArrayList<TvShow>()
+
+    //Pagination variables for Similar TVShows
     var isLoading = MutableLiveData<Boolean>()
     var showError = MutableLiveData<Boolean>()
-    var shouldClearList = MutableLiveData<Boolean>()
 
     private val startingPagination = 1
 
@@ -43,7 +44,6 @@ class TvShowViewModel @Inject constructor( private val repository: TvShowsReposi
     private fun handleResults(response: TvShowListResponse) {
 
         if(page == startingPagination) {
-            shouldClearList.value = true
             tvShowsList = ArrayList()
         }
 

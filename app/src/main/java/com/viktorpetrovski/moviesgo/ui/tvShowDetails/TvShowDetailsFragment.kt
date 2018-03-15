@@ -13,13 +13,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.viktorpetrovski.moviesgo.R
-import com.viktorpetrovski.moviesgo.data.model.TvShow
 import com.viktorpetrovski.moviesgo.di.Injectable
 import com.viktorpetrovski.moviesgo.ui.base.NavigationController
 import com.viktorpetrovski.moviesgo.util.ImageLoader
 import com.viktorpetrovski.moviesgo.util.ext.observe
 import kotlinx.android.synthetic.main.details_tv_show.*
 import kotlinx.android.synthetic.main.fragment_tv_show_details.*
+import ru.alexbykov.nopaginate.paginate.Paginate
+import ru.alexbykov.nopaginate.paginate.PaginateBuilder
 import javax.inject.Inject
 
 /**
@@ -36,10 +37,9 @@ class TvShowDetailsFragment : Fragment(), Injectable {
     @Inject
     lateinit var similarShowsAdapter: SimilarShowsAdapter
 
-    @Inject
-    lateinit var mLayoutManager: LinearLayoutManager
-
     private lateinit var tvShowViewModel: TvShowDetailsViewModel
+
+    private lateinit var paginate: Paginate
 
     var toolbarTitle = String()
 
@@ -70,7 +70,7 @@ class TvShowDetailsFragment : Fragment(), Injectable {
 
         tvShowViewModel = ViewModelProviders.of(this, viewModelFactory).get(TvShowDetailsViewModel::class.java)
 
-        setUp()
+        setUpRecyclerView()
 
         tvShowViewModel.tvShow.observe(this) {
             it?.let {
@@ -86,7 +86,19 @@ class TvShowDetailsFragment : Fragment(), Injectable {
 
         tvShowViewModel.similarTvShowsList.observe(this) {
             it?.let {
-                similarShowsAdapter.mList = it as ArrayList<TvShow>
+                similarShowsAdapter.mList = tvShowViewModel.tvShowList
+            }
+        }
+
+        tvShowViewModel.isLoading.observe(this){
+            it?.let {
+                paginate.showLoading(it)
+            }
+        }
+
+        tvShowViewModel.showError.observe(this){
+            it?.let {
+                paginate.showError(it)
             }
         }
 
@@ -100,8 +112,8 @@ class TvShowDetailsFragment : Fragment(), Injectable {
         }
 
         arguments?.getLong(ARG_TVSHOW_ID)?.let {
-            tvShowViewModel.getTvShowDetails(it)
-            tvShowViewModel.getSimilarTvShows(it)
+            tvShowViewModel.setTvShowId(it)
+            tvShowViewModel.getTvShowDetails()
         }
 
         hideToolbarTitleWhenExpanded()
@@ -129,19 +141,38 @@ class TvShowDetailsFragment : Fragment(), Injectable {
         })
     }
 
-    private fun setUp() {
+    private fun setUpRecyclerView() {
         ViewCompat.setNestedScrollingEnabled(rv_similar_tv_show, false);
 
 //        mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        rv_similar_tv_show.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        rv_similar_tv_show.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         //rv_similar_tv_show.isNestedScrollingEnabled = false
         rv_similar_tv_show.adapter = similarShowsAdapter
 
 
+        paginate = PaginateBuilder()
+                .with(rv_similar_tv_show)
+                .setOnLoadMoreListener {
+                    tvShowViewModel.getSimilarTvShows()
+                }
+                .build()
 
+//        swipe_refresh.setColorSchemeResources(R.color.colorPrimary)
+//
+//        swipe_refresh.setOnRefreshListener {
+//            tvShowViewModel.resetPagination()
+//            tvShowViewModel.getSimilarTvShows()
+//        }
+
+        //Handle Adapter OnClick event
         similarShowsAdapter.clickEvent.subscribe({
             navigationController.navigateToTvShowDetails(it.id)
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        paginate.unbind()
     }
 
 }
