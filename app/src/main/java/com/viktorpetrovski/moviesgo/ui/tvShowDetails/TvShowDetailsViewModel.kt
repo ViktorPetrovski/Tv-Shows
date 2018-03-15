@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel
 import com.viktorpetrovski.moviesgo.data.model.TvShow
 import com.viktorpetrovski.moviesgo.data.remote.apiModel.TvShowListResponse
 import com.viktorpetrovski.moviesgo.repository.TvShowsRepository
+import com.viktorpetrovski.moviesgo.util.NetworkEnum
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -18,9 +19,10 @@ class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepos
     var similarTvShowsList = MutableLiveData<List<TvShow>>()
 
     var tvShowList = ArrayList<TvShow>()
+    var loadingObservable = MutableLiveData<NetworkEnum>()
 
     //Pagination variables for Similar TVShows
-    var isLoading = MutableLiveData<Boolean>()
+    var isLoadingSimilarTvShows = MutableLiveData<Boolean>()
     var showError = MutableLiveData<Boolean>()
     private val startingPagination = 1
 
@@ -32,6 +34,7 @@ class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepos
     }
 
     fun getTvShowDetails() {
+        loadingObservable.value = NetworkEnum.LOADING
         tvShowsListingRepository.loadTvShowDetails(tvShowId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -39,11 +42,11 @@ class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepos
     }
 
     fun getSimilarTvShows(){
-        isLoading.value = true
+        isLoadingSimilarTvShows.value = true
         tvShowsListingRepository.loadSimilarTvShows(tvShowId,page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::handleSimilarTvShowResponse, this::handleError)
+                .subscribe(this::handleSimilarTvShowResponse, this::handleSimillarTvShowsError)
     }
 
     private fun handleSimilarTvShowResponse( response : TvShowListResponse){
@@ -54,17 +57,21 @@ class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepos
         page++
         tvShowList.addAll(response.showsList)
         similarTvShowsList.value = tvShowList
-        isLoading.value = false
+        isLoadingSimilarTvShows.value = false
 
     }
 
     private fun handleResults(response: TvShow) {
-        //tvShow = MutableLiveData()
+        loadingObservable.value = NetworkEnum.SUCCESS
         tvShow.value = response
     }
 
     private fun handleError(t: Throwable) {
-        isLoading.value = false
+        loadingObservable.value = NetworkEnum.ERROR
+    }
+
+    private fun handleSimillarTvShowsError(t: Throwable) {
+        isLoadingSimilarTvShows.value = false
         showError.value = true
     }
 

@@ -24,6 +24,7 @@ class MoviesApp : Application(), HasActivityInjector {
         super.onCreate()
 
         applyAutoInjector()
+
         //Init Dagger
         DaggerAppComponent.builder()
                 .application(this)

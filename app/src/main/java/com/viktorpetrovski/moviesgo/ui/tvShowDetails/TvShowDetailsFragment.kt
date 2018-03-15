@@ -16,9 +16,12 @@ import com.viktorpetrovski.moviesgo.R
 import com.viktorpetrovski.moviesgo.di.Injectable
 import com.viktorpetrovski.moviesgo.ui.base.NavigationController
 import com.viktorpetrovski.moviesgo.util.ImageLoader
+import com.viktorpetrovski.moviesgo.util.NetworkEnum
 import com.viktorpetrovski.moviesgo.util.ext.observe
+import com.viktorpetrovski.moviesgo.util.view.CustomErrorItem
 import kotlinx.android.synthetic.main.details_tv_show.*
 import kotlinx.android.synthetic.main.fragment_tv_show_details.*
+import kotlinx.android.synthetic.main.tv_show_details_stats.*
 import ru.alexbykov.nopaginate.paginate.Paginate
 import ru.alexbykov.nopaginate.paginate.PaginateBuilder
 import javax.inject.Inject
@@ -72,6 +75,35 @@ class TvShowDetailsFragment : Fragment(), Injectable {
 
         setUpRecyclerView()
 
+        progresss_waiting.show()
+
+        tvShowViewModel.loadingObservable.observe(this){
+            it?.let {
+                when(it){
+                    NetworkEnum.SUCCESS ->{
+                        progresss_waiting.hide()
+                        content.visibility = View.VISIBLE
+                        content_error.visibility = View.GONE
+                    }
+                    NetworkEnum.LOADING ->{
+                        progresss_waiting.show()
+                        content.visibility = View.GONE
+                        content_error.visibility = View.GONE
+                    }
+                    NetworkEnum.ERROR ->{
+                        progresss_waiting.hide()
+                        content.visibility = View.GONE
+                        content_error.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+        }
+
+        content_error.setOnClickListener {
+            tvShowViewModel.getTvShowDetails()
+        }
+
         tvShowViewModel.tvShow.observe(this) {
             it?.let {
                 ImageLoader.loadPosterImage(iv_poster, it.posterPath)
@@ -81,6 +113,13 @@ class TvShowDetailsFragment : Fragment(), Injectable {
                 tv_description.text = "${it.overview}"
                 tv_show_genres.text = tvShowViewModel.createGenresString(it)
 
+                tv_episodes.text = String.format(getString(R.string.no_episodes),it.numberEpisodes)
+                tv_seasons.text = String.format(getString(R.string.no_seasons),it.numberSeasons)
+                tv_vote_avg.text = String.format(getString(R.string.avg_rating),it.vote)
+
+                tv_number_of_votes.text = it.voteCount.toString()
+
+                //progresss_waiting.hide()
             }
         }
 
@@ -90,7 +129,7 @@ class TvShowDetailsFragment : Fragment(), Injectable {
             }
         }
 
-        tvShowViewModel.isLoading.observe(this){
+        tvShowViewModel.isLoadingSimilarTvShows.observe(this){
             it?.let {
                 paginate.showLoading(it)
             }
@@ -106,7 +145,7 @@ class TvShowDetailsFragment : Fragment(), Injectable {
             collapsing_toolbar_layout.setExpandedTitleTextAppearance(R.style.TransparentText)
 
 
-        toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_back_arrow)
+        toolbar.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back)
         toolbar.setNavigationOnClickListener {
             navigationController.popBack()
         }
@@ -152,6 +191,8 @@ class TvShowDetailsFragment : Fragment(), Injectable {
 
         paginate = PaginateBuilder()
                 .with(rv_similar_tv_show)
+                .setLoadingTriggerThreshold(5) //0 by default
+                .setCustomErrorItem(CustomErrorItem())
                 .setOnLoadMoreListener {
                     tvShowViewModel.getSimilarTvShows()
                 }

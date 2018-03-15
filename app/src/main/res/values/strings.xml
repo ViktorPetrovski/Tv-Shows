@@ -31,8 +31,12 @@
     <string name="you_might_like">You Might Also Like</string>
 
     <!--empty state-->
-    <string name="empty_screen">We do not have anything\nhere right now.</string>
+    <string name="empty_screen">Network error\nTap to retry.</string>
     <string name="please_retry">Please Retry</string>
     <string name="retry">Retry</string>
+
+    <string name="avg_rating">%.2f/10</string>
+    <string name="no_seasons">%d Seasons</string>
+    <string name="no_episodes">%d Episodes</string>
 
 </resources>

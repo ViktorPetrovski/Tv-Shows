@@ -14,6 +14,7 @@ import com.viktorpetrovski.moviesgo.R
 import com.viktorpetrovski.moviesgo.di.Injectable
 import com.viktorpetrovski.moviesgo.ui.base.NavigationController
 import com.viktorpetrovski.moviesgo.util.ext.observe
+import com.viktorpetrovski.moviesgo.util.view.CustomErrorItem
 import kotlinx.android.synthetic.main.fragment_movies_list.*
 import ru.alexbykov.nopaginate.paginate.Paginate
 import ru.alexbykov.nopaginate.paginate.PaginateBuilder
@@ -93,6 +94,8 @@ class MoviesListFragment : Fragment(), Injectable {
 
         paginate = PaginateBuilder()
                 .with(rv_tv_shows)
+                .setLoadingTriggerThreshold(5) //0 by default
+                .setCustomErrorItem(CustomErrorItem())
                 .setOnLoadMoreListener {
                     viewModel.loadPopularTvShows()
                 }

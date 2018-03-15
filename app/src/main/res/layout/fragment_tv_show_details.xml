@@ -49,8 +49,31 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/details_tv_show" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <android.support.v4.widget.ContentLoadingProgressBar
+                android:id="@+id/progresss_waiting"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp" />
+
+            <include
+                android:id="@+id/content"
+                layout="@layout/details_tv_show"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+            <include
+                android:id="@+id/content_error"
+                layout="@layout/item_empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </FrameLayout>
 
     </com.viktorpetrovski.moviesgo.util.view.MyNestedScrollView>
 
