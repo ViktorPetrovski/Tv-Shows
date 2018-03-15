@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
-    android:clickable="true"
-    android:fitsSystemWindows="true">
+    android:clickable="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
@@ -34,25 +33,25 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
                 app:expandedTitleTextAppearance="@android:color/transparent"
+                app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
+    <com.viktorpetrovski.moviesgo.util.view.MyNestedScrollView
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@android:color/transparent"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <include layout="@layout/details_tv_show" />
 
-        <include layout="@layout/details_tv_show"/>
 
-
-    </android.support.v4.widget.NestedScrollView>
+    </com.viktorpetrovski.moviesgo.util.view.MyNestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>

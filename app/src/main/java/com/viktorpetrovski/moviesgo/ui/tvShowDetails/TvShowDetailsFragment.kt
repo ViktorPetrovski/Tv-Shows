@@ -1,4 +1,4 @@
-package com.viktorpetrovski.moviesgo.ui.movieDetails
+package com.viktorpetrovski.moviesgo.ui.tvShowDetails
 
 
 import android.arch.lifecycle.ViewModelProvider
@@ -7,10 +7,13 @@ import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewCompat
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.viktorpetrovski.moviesgo.R
+import com.viktorpetrovski.moviesgo.data.model.TvShow
 import com.viktorpetrovski.moviesgo.di.Injectable
 import com.viktorpetrovski.moviesgo.ui.base.NavigationController
 import com.viktorpetrovski.moviesgo.util.ImageLoader
@@ -24,9 +27,17 @@ import javax.inject.Inject
  */
 class TvShowDetailsFragment : Fragment(), Injectable {
 
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    @Inject lateinit var navigationController: NavigationController
+    @Inject
+    lateinit var navigationController: NavigationController
+
+    @Inject
+    lateinit var similarShowsAdapter: SimilarShowsAdapter
+
+    @Inject
+    lateinit var mLayoutManager: LinearLayoutManager
 
     private lateinit var tvShowViewModel: TvShowDetailsViewModel
 
@@ -34,14 +45,14 @@ class TvShowDetailsFragment : Fragment(), Injectable {
 
     companion object {
 
-        private val ARG_TVSHOW_ID = "tv_show_id"
+        private const val ARG_TVSHOW_ID = "tv_show_id"
 
-        fun newInstance(showId : Long) : TvShowDetailsFragment{
+        fun newInstance(showId: Long): TvShowDetailsFragment {
 
             val newFragment = TvShowDetailsFragment()
 
             val args = Bundle()
-            args.putLong(ARG_TVSHOW_ID,showId)
+            args.putLong(ARG_TVSHOW_ID, showId)
             newFragment.arguments = args
 
             return newFragment
@@ -57,18 +68,25 @@ class TvShowDetailsFragment : Fragment(), Injectable {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        tvShowViewModel = ViewModelProviders.of(this, viewModelFactory).get(TvShowDetailsViewModel::class.java)
 
-        tvShowViewModel = ViewModelProviders.of(this,viewModelFactory).get(TvShowDetailsViewModel::class.java)
-
+        setUp()
 
         tvShowViewModel.tvShow.observe(this) {
-            it?.let{
-                ImageLoader.loadPosterImage(iv_poster,it.posterPath)
-                ImageLoader.loadBannerImage(iv_header,it.backDropPath)
+            it?.let {
+                ImageLoader.loadPosterImage(iv_poster, it.posterPath)
+                ImageLoader.loadBannerImage(iv_header, it.backDropPath)
                 tv_show_title.text = it.name
                 toolbarTitle = it.name
-                tv_description.text = "${it.overview} ${it.overview} ${it.overview} ${it.overview} "
+                tv_description.text = "${it.overview}"
+                tv_show_genres.text = tvShowViewModel.createGenresString(it)
 
+            }
+        }
+
+        tvShowViewModel.similarTvShowsList.observe(this) {
+            it?.let {
+                similarShowsAdapter.mList = it as ArrayList<TvShow>
             }
         }
 
@@ -83,6 +101,7 @@ class TvShowDetailsFragment : Fragment(), Injectable {
 
         arguments?.getLong(ARG_TVSHOW_ID)?.let {
             tvShowViewModel.getTvShowDetails(it)
+            tvShowViewModel.getSimilarTvShows(it)
         }
 
         hideToolbarTitleWhenExpanded()
@@ -90,7 +109,7 @@ class TvShowDetailsFragment : Fragment(), Injectable {
     }
 
 
-    private fun hideToolbarTitleWhenExpanded(){
+    private fun hideToolbarTitleWhenExpanded() {
         appBar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             internal var isShow = false
             internal var scrollRange = -1
@@ -107,6 +126,21 @@ class TvShowDetailsFragment : Fragment(), Injectable {
                     isShow = false
                 }
             }
+        })
+    }
+
+    private fun setUp() {
+        ViewCompat.setNestedScrollingEnabled(rv_similar_tv_show, false);
+
+//        mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        rv_similar_tv_show.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        //rv_similar_tv_show.isNestedScrollingEnabled = false
+        rv_similar_tv_show.adapter = similarShowsAdapter
+
+
+
+        similarShowsAdapter.clickEvent.subscribe({
+            navigationController.navigateToTvShowDetails(it.id)
         })
     }
 

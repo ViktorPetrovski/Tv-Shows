@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,11 @@ import com.viktorpetrovski.moviesgo.di.Injectable
 import com.viktorpetrovski.moviesgo.ui.base.NavigationController
 import com.viktorpetrovski.moviesgo.util.ext.observe
 import kotlinx.android.synthetic.main.fragment_movies_list.*
+import ru.alexbykov.nopaginate.paginate.Paginate
+import ru.alexbykov.nopaginate.paginate.PaginateBuilder
 import javax.inject.Inject
+
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -30,8 +35,13 @@ class MoviesListFragment : Fragment(), Injectable {
 
     @Inject lateinit var mLayoutManager: LinearLayoutManager
 
-
     private lateinit var viewModel : TvShowViewModel
+
+    private lateinit var paginate : Paginate
+
+    private lateinit var recyclerViewTvShows : RecyclerView
+
+    private var page = 1
 
     companion object {
         fun newInstance() = MoviesListFragment()
@@ -46,11 +56,33 @@ class MoviesListFragment : Fragment(), Injectable {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(activity!!,viewModelFactory).get(TvShowViewModel::class.java)
 
-        setUp()
+        setUpRecyclerView()
 
         viewModel.tvShowsList.observe(this) {
             it?.let{
-                moviesListAdapter.mList = it.showsList
+                moviesListAdapter.addItems( it.showsList )
+            }
+        }
+
+        viewModel.isLoading.observe(this){
+            it?.let {
+                paginate.showLoading(it)
+                //Close the Swipe Refresh only if it's been active before
+                if(swipe_refresh.isRefreshing)
+                    swipe_refresh.isRefreshing = it
+            }
+        }
+
+        viewModel.shouldClearList.observe(this){
+            it?.let {
+                if (it)
+                    moviesListAdapter.clearItems()
+            }
+        }
+
+        viewModel.showError.observe(this){
+            it?.let {
+                paginate.showError(it)
             }
         }
 
@@ -58,14 +90,34 @@ class MoviesListFragment : Fragment(), Injectable {
             navigatonController.navigateToTvShowDetails(it.id)
         })
 
-        viewModel.loadPopularTvShows(1)
+
+        toolbar_tv_show_list.title = getString(R.string.app_name)
 
     }
 
-    private fun setUp() {
+    private fun setUpRecyclerView() {
         mLayoutManager.orientation = LinearLayoutManager.VERTICAL
         rv_tv_shows.layoutManager = mLayoutManager
         rv_tv_shows.itemAnimator = DefaultItemAnimator()
         rv_tv_shows.adapter = moviesListAdapter
+
+        paginate = PaginateBuilder()
+                .with(rv_tv_shows)
+                .setOnLoadMoreListener {
+                    viewModel.loadPopularTvShows()
+                }
+                .build()
+
+        swipe_refresh.setColorSchemeResources(R.color.colorPrimary)
+
+        swipe_refresh.setOnRefreshListener {
+            viewModel.resetPagination()
+            viewModel.loadPopularTvShows()
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        paginate.unbind()
     }
 }

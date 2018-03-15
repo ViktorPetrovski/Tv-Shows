@@ -35,6 +35,7 @@ ext {
     targetSdkVersion = 26
     compileSdkVersion = 26
     buildToolsVersion = '26.0.2'
+    paginate = '0.4.4'
 
     supportLibraryVersion = '26.1.0'
 

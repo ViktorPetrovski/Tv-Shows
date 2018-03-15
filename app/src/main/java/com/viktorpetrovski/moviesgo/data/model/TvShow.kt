@@ -17,5 +17,7 @@ data class TvShow(
         @SerializedName("poster_path")
         var posterPath: String,
         @SerializedName("backdrop_path")
-        var backDropPath: String
+        var backDropPath: String,
+        @SerializedName("genres")
+        var genresList : ArrayList<Genre>
         )

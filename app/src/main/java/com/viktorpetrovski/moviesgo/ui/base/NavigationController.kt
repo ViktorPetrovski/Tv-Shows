@@ -3,7 +3,7 @@ package com.viktorpetrovski.moviesgo.ui.base
 import android.support.v4.app.FragmentManager
 import com.viktorpetrovski.moviesgo.R
 import com.viktorpetrovski.moviesgo.ui.MainActivity
-import com.viktorpetrovski.moviesgo.ui.movieDetails.TvShowDetailsFragment
+import com.viktorpetrovski.moviesgo.ui.tvShowDetails.TvShowDetailsFragment
 import com.viktorpetrovski.moviesgo.ui.movieslist.MoviesListFragment
 import javax.inject.Inject
 

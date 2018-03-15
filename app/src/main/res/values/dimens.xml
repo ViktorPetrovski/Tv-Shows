@@ -2,6 +2,10 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="details_frag_poster_width">78dp</dimen>
     <dimen name="details_frag_poster_height">118dp</dimen>
+
+    <dimen name="similar_tv_show_banner_width">208dp</dimen>
+    <dimen name="similar_tv_show_banner_height">118dp</dimen>
+
     <item type="integer" name="fragment_anim_duration">240</item>
 
 </resources>

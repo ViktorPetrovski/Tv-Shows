@@ -22,6 +22,15 @@ abstract class BaseRecyclerViewAdapter<T> : RecyclerView.Adapter<BaseViewHolder<
             notifyDataSetChanged()
         }
 
+    fun addItems(newItems : ArrayList<T>){
+        mList.addAll(newItems)
+        notifyDataSetChanged()
+    }
+
+    fun clearItems(){
+        mList.clear()
+        notifyDataSetChanged()
+    }
 
     fun getView(parent: ViewGroup, viewType: Int) : View = LayoutInflater.from(parent.context).inflate(getLayoutItem(parent,viewType),parent,false)
 

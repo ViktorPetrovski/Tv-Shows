@@ -6,10 +6,12 @@ import javax.inject.Inject
 /**
  * Created by Victor on 3/13/18.
  */
-class TvShowsListingRepository @Inject constructor(private val tvShowService: TvShowService){
+class TvShowsRepository @Inject constructor(private val tvShowService: TvShowService){
 
     fun loadPopularTvShows(page : Int) = tvShowService.listPopularTvShows(page = page)
 
     fun loadTvShowDetails(tvShowId : Long) = tvShowService.getTvShowDetails(tvShowId)
+
+    fun loadSimilarTvShows(tvShowId : Long) = tvShowService.getSimilarTvShows(tvShowId)
 
 }

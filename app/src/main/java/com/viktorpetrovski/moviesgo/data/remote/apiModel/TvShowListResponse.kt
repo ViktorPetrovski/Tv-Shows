@@ -7,7 +7,7 @@ import java.util.*
 /**
  * Created by Victor on 3/13/18.
  */
-data class MoviesListResponse(
+data class TvShowListResponse(
         @SerializedName("page")
         var page : Int,
         @SerializedName("results")
