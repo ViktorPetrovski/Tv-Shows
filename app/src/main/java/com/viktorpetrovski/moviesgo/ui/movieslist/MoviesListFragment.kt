@@ -58,10 +58,11 @@ class MoviesListFragment : Fragment(), Injectable {
 
         setUpRecyclerView()
 
-        viewModel.tvShowsList.observe(this) {
+        viewModel.tvShowsListResponse.observe(this) {
             it?.let{
                 moviesListAdapter.addItems( it.showsList )
             }
+            moviesListAdapter.mList = viewModel.tvShowsList
         }
 
         viewModel.isLoading.observe(this){
@@ -70,13 +71,6 @@ class MoviesListFragment : Fragment(), Injectable {
                 //Close the Swipe Refresh only if it's been active before
                 if(swipe_refresh.isRefreshing)
                     swipe_refresh.isRefreshing = it
-            }
-        }
-
-        viewModel.shouldClearList.observe(this){
-            it?.let {
-                if (it)
-                    moviesListAdapter.clearItems()
             }
         }
 
@@ -89,7 +83,6 @@ class MoviesListFragment : Fragment(), Injectable {
         moviesListAdapter.clickEvent.subscribe({
             navigatonController.navigateToTvShowDetails(it.id)
         })
-
 
         toolbar_tv_show_list.title = getString(R.string.app_name)
 

@@ -2,6 +2,7 @@ package com.viktorpetrovski.moviesgo.ui.movieslist
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
+import com.viktorpetrovski.moviesgo.data.model.TvShow
 import com.viktorpetrovski.moviesgo.data.remote.apiModel.TvShowListResponse
 import com.viktorpetrovski.moviesgo.repository.TvShowsRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class TvShowViewModel @Inject constructor( private val repository: TvShowsRepository) : ViewModel(){
 
     val tvShowsPage = MutableLiveData<Int>()
-    var tvShowsList = MutableLiveData<TvShowListResponse>()
+    var tvShowsListResponse = MutableLiveData<TvShowListResponse>()
+    var tvShowsList = ArrayList<TvShow>()
     var isLoading = MutableLiveData<Boolean>()
     var showError = MutableLiveData<Boolean>()
     var shouldClearList = MutableLiveData<Boolean>()
@@ -40,12 +42,16 @@ class TvShowViewModel @Inject constructor( private val repository: TvShowsReposi
 
     private fun handleResults(response: TvShowListResponse) {
 
-        if(page == startingPagination)
+        if(page == startingPagination) {
             shouldClearList.value = true
+            tvShowsList = ArrayList()
+        }
 
         page++
-        tvShowsList.value = response
+        tvShowsListResponse.value = response
         isLoading.value = false
+
+        tvShowsList.addAll(response.showsList)
     }
 
     private fun handleError(t: Throwable) {
