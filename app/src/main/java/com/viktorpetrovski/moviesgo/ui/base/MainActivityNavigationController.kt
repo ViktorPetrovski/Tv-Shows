@@ -4,7 +4,7 @@ import android.support.v4.app.FragmentManager
 import com.viktorpetrovski.moviesgo.R
 import com.viktorpetrovski.moviesgo.ui.MainActivity
 import com.viktorpetrovski.moviesgo.ui.tvShowDetails.TvShowDetailsFragment
-import com.viktorpetrovski.moviesgo.ui.movieslist.MoviesListFragment
+import com.viktorpetrovski.moviesgo.ui.tvShowsList.TvShowsListFragment
 import javax.inject.Inject
 
 /**
@@ -14,7 +14,7 @@ import javax.inject.Inject
  *
  */
 
-class NavigationController @Inject constructor(private val mainActivity: MainActivity) {
+class MainActivityNavigationController @Inject constructor(private val mainActivity: MainActivity) {
 
     private val containerId: Int = R.id.containerLayout
 
@@ -22,7 +22,7 @@ class NavigationController @Inject constructor(private val mainActivity: MainAct
 
     fun navigateToTvShowList(){
         fragmentManager.beginTransaction()
-                .replace(containerId, MoviesListFragment.newInstance())
+                .replace(containerId, TvShowsListFragment.newInstance())
                 .commitAllowingStateLoss()
     }
 

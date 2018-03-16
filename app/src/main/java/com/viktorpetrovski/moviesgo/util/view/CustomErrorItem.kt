@@ -8,10 +8,10 @@ import com.viktorpetrovski.moviesgo.R
 import ru.alexbykov.nopaginate.callback.OnRepeatListener
 import ru.alexbykov.nopaginate.item.ErrorItem
 
-
-
 /**
  * Created by Victor on 3/15/18.
+ *
+ * Custom Error Item that is used by [PaginateBuilder]
  */
 class CustomErrorItem : ErrorItem {
 

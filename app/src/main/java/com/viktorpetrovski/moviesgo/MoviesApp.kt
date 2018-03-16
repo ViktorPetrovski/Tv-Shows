@@ -15,16 +15,16 @@ import javax.inject.Inject
  */
 class MoviesApp : Application(), HasActivityInjector {
 
-    @Inject lateinit var mCalligraphyConfig: CalligraphyConfig
+    @Inject
+    lateinit var mCalligraphyConfig: CalligraphyConfig
 
-    @Inject lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
-
+    @Inject
+    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
     override fun onCreate() {
         super.onCreate()
 
         applyAutoInjector()
-
         //Init Dagger
         DaggerAppComponent.builder()
                 .application(this)
@@ -33,9 +33,7 @@ class MoviesApp : Application(), HasActivityInjector {
 
 
         CalligraphyConfig.initDefault(mCalligraphyConfig)
-
     }
-
 
     override fun activityInjector(): AndroidInjector<Activity> = activityDispatchingAndroidInjector
 }

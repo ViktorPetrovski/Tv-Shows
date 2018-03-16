@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.viktorpetrovski.moviesgo.R
-import com.viktorpetrovski.moviesgo.ui.base.NavigationController
+import com.viktorpetrovski.moviesgo.ui.base.MainActivityNavigationController
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Fragment>
 
-    @Inject lateinit var navigatonController : NavigationController
+    @Inject lateinit var mainActivityNavigationController : MainActivityNavigationController
 
     override fun supportFragmentInjector() = androidInjector
 
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
         setContentView(R.layout.activity_movies_list)
 
         if(savedInstanceState == null)
-            navigatonController.navigateToTvShowList()
+            mainActivityNavigationController.navigateToTvShowList()
 
     }
 

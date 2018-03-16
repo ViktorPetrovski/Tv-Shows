@@ -11,12 +11,16 @@ import android.view.ViewConfiguration;
  */
 
 public class MyNestedScrollView extends NestedScrollView {
+
     @SuppressWarnings("unused")
     private int slop;
+
     @SuppressWarnings("unused")
     private float mInitialMotionX;
+
     @SuppressWarnings("unused")
     private float mInitialMotionY;
+
     public MyNestedScrollView(Context context) {
         super(context);
         init(context);
@@ -25,16 +29,19 @@ public class MyNestedScrollView extends NestedScrollView {
         ViewConfiguration config = ViewConfiguration.get(context);
         slop = config.getScaledEdgeSlop();
     }
+
     public MyNestedScrollView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
+
     public MyNestedScrollView(Context context, AttributeSet attrs,
                               int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context);
     }
     private float xDistance, yDistance, lastX, lastY;
+
     @SuppressWarnings("unused")
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -66,6 +73,7 @@ public class MyNestedScrollView extends NestedScrollView {
                              int oldt);
     }
     private OnScrollChangedListener mOnScrollChangedListener;
+
     public void setOnScrollChangedListener(OnScrollChangedListener listener) {
         mOnScrollChangedListener = listener;
     }
