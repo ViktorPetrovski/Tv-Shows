@@ -17,5 +17,12 @@ data class TvShow(
         @SerializedName("poster_path")
         var posterPath: String,
         @SerializedName("backdrop_path")
-        var backDropPath: String
-        )
+        var backDropPath: String,
+        @SerializedName("genres")
+        var genresList : ArrayList<Genre>,
+        @SerializedName("number_of_episodes")
+        var numberEpisodes : Int,
+        @SerializedName("number_of_seasons")
+        var numberSeasons : Int,
+        @SerializedName("vote_count")
+        var voteCount : Int)

@@ -1,4 +1,4 @@
-package com.viktorpetrovski.moviesgo
+package com.viktorpetrovski.moviesgo.util.provider
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider

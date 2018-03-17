@@ -1,4 +1,4 @@
-package com.viktorpetrovski.moviesgo.util
+package com.viktorpetrovski.moviesgo.di.module
 
 import android.content.Context
 import com.bumptech.glide.Glide
@@ -16,7 +16,7 @@ import java.io.InputStream
  * Created by Victor on 3/14/18.
  */
 @GlideModule
-class MangoAppGlideModule : AppGlideModule() {
+class TvShowsGlideModule : AppGlideModule() {
 
     companion object {
 

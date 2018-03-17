@@ -2,9 +2,9 @@ package com.viktorpetrovski.moviesgo.di.module
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.viktorpetrovski.moviesgo.ViewModelProviderFactory
-import com.viktorpetrovski.moviesgo.ui.movieDetails.TvShowDetailsViewModel
-import com.viktorpetrovski.moviesgo.ui.movieslist.TvShowViewModel
+import com.viktorpetrovski.moviesgo.util.provider.ViewModelProviderFactory
+import com.viktorpetrovski.moviesgo.ui.tvShowsList.TvShowsListViewModel
+import com.viktorpetrovski.moviesgo.ui.tvShowDetails.TvShowDetailsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -18,8 +18,8 @@ abstract class ViewModelModule{
 
     @Binds
     @IntoMap
-    @ViewModelKey(TvShowViewModel::class)
-    internal abstract fun bindTvShowViewModel(tvShowViewModel: TvShowViewModel) : ViewModel
+    @ViewModelKey(TvShowsListViewModel::class)
+    internal abstract fun bindTvShowViewModel(tvShowViewModel: TvShowsListViewModel) : ViewModel
 
 
     @Binds

@@ -1,4 +1,4 @@
-package com.viktorpetrovski.moviesgo.ui.movieslist
+package com.viktorpetrovski.moviesgo.ui.tvShowsList
 
 import android.view.View
 import android.view.ViewGroup
@@ -13,16 +13,13 @@ import javax.inject.Inject
 /**
  * Created by Victor on 3/13/18.
  */
-class MoviesListAdapter @Inject constructor() : BaseRecyclerViewAdapter<TvShow>() {
+class TvShowsListAdapter @Inject constructor() : BaseRecyclerViewAdapter<TvShow>() {
 
     override fun getLayoutItem(parent: ViewGroup, viewType: Int): Int = R.layout.tv_show_list_item
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MoviesViewHolder(getView(parent,viewType))
 
-
     inner class MoviesViewHolder(itemView: View) : BaseViewHolder<TvShow>(itemView) {
-
-       // private var ivTvShowBanner = itemView.find<ImageView>(R.id.tv_tv_show_banner)
 
         override fun bind(item: TvShow) {
             ImageLoader.loadBannerImage(itemView.iv_tv_show_banner,item.backDropPath)

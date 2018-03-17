@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Movies Go</string>
+    <string name="app_name">Tv Shows</string>
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -26,4 +26,17 @@
 
         The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.
     </string>
+
+    <string name="overview">Overview</string>
+    <string name="you_might_like">You Might Also Like</string>
+
+    <!--empty state-->
+    <string name="empty_screen">Network error\nTap to retry.</string>
+    <string name="please_retry">Please Retry</string>
+    <string name="retry">Retry</string>
+
+    <string name="avg_rating">%.2f/10</string>
+    <string name="no_seasons">%d Seasons</string>
+    <string name="no_episodes">%d Episodes</string>
+
 </resources>
