@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager
 import com.viktorpetrovski.moviesgo.R
 import com.viktorpetrovski.moviesgo.di.Injectable
 import com.viktorpetrovski.moviesgo.ui.base.BaseFragment
-import com.viktorpetrovski.moviesgo.ui.base.MainActivityNavigationController
 import com.viktorpetrovski.moviesgo.util.NetworkLoadingStatus
 import com.viktorpetrovski.moviesgo.util.ext.observe
 import com.viktorpetrovski.moviesgo.util.view.CustomErrorItem
@@ -25,9 +24,6 @@ class TvShowsListFragment : BaseFragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    @Inject
-    lateinit var mainActivityNavigationController: MainActivityNavigationController
 
     @Inject
     lateinit var tvShowsListAdapter: TvShowsListAdapter
@@ -93,7 +89,7 @@ class TvShowsListFragment : BaseFragment(), Injectable {
 
         //Handles Tv Show ItemClick
         tvShowsListAdapter.clickEvent.subscribe({
-            mainActivityNavigationController.navigateToTvShowDetails(it.id)
+            tvShowsListViewModel.handleOnTvShowListItemClick(it)
         })
 
 
