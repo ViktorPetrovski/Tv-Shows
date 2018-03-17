@@ -2,6 +2,7 @@ package com.viktorpetrovski.moviesgo.di.module
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import com.viktorpetrovski.moviesgo.di.annotation.ViewModelKey
 import com.viktorpetrovski.moviesgo.util.provider.ViewModelProviderFactory
 import com.viktorpetrovski.moviesgo.ui.tvShowsList.TvShowsListViewModel
 import com.viktorpetrovski.moviesgo.ui.tvShowDetails.TvShowDetailsViewModel

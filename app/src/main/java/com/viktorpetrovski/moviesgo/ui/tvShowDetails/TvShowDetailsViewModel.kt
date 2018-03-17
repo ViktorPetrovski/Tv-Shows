@@ -1,5 +1,6 @@
 package com.viktorpetrovski.moviesgo.ui.tvShowDetails
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.viktorpetrovski.moviesgo.data.model.TvShow
@@ -39,6 +40,7 @@ class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepos
         this.tvShowId = tvShowId
     }
 
+    @SuppressLint("RxLeakedSubscription")
     fun getTvShowDetails() {
         loadingObservable.value = NetworkLoadingStatus.LOADING
         tvShowsListingRepository.loadTvShowDetails(tvShowId)
@@ -47,6 +49,7 @@ class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepos
                 .subscribe(this::handleResults, this::handleError)
     }
 
+    @SuppressLint("RxLeakedSubscription")
     fun getSimilarTvShows(){
         similarShowsLoadingObservable.value = NetworkLoadingStatus.LOADING
         tvShowsListingRepository.loadSimilarTvShows(tvShowId,page)
@@ -62,7 +65,7 @@ class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepos
 
         similarShowsLoadingObservable.value = NetworkLoadingStatus.SUCCESS
 
-        if(response.totalPages >= page)
+        if(response.totalPages <= page)
             similarShowsLoadingObservable.value = NetworkLoadingStatus.ALL_PAGES_LOADED
 
         page++
