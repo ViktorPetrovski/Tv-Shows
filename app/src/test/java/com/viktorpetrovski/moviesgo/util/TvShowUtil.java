@@ -15,7 +15,7 @@ import java.io.UnsupportedEncodingException;
 
 public class TvShowUtil {
 
-    public static TvShowListResponse getPopularTvShows(ClassLoader classLoader) throws UnsupportedEncodingException {
+    public static TvShowListResponse getTvShowsList(ClassLoader classLoader) throws UnsupportedEncodingException {
         return getTvShowsListResponseJsonForFilename(classLoader,"api-response/popular_tv_shows.json");
     }
 

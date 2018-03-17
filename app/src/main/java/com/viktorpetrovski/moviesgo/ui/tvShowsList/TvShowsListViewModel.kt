@@ -16,7 +16,7 @@ import javax.inject.Inject
  * Created by Victor on 3/13/18.
  */
 
-class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRepository, private val mSchedulers : SchedulerProvider, private var mainActivityNavigationController: MainActivityNavigationController) : ViewModel() {
+class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRepository, private val mSchedulers: SchedulerProvider, private var mainActivityNavigationController: MainActivityNavigationController) : ViewModel() {
 
     @VisibleForTesting
     var tvShowsListResponse = MutableLiveData<TvShowListResponse>()
@@ -41,6 +41,7 @@ class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRe
                 .subscribeOn(mSchedulers.io())
                 .observeOn(mSchedulers.ui())
                 .subscribe(this::handleResults, this::handleError)
+
     }
 
 
@@ -54,7 +55,7 @@ class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRe
 
         page++
 
-        if(response.totalPages <= page)
+        if (response.totalPages <= page)
             loadingObservable.value = NetworkLoadingStatus.ALL_PAGES_LOADED
 
 
@@ -63,7 +64,7 @@ class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRe
         tvShowsList.addAll(response.showsList)
     }
 
-    fun handleOnTvShowListItemClick(tvShow : TvShow){
+    fun handleOnTvShowListItemClick(tvShow: TvShow) {
         mainActivityNavigationController.navigateToTvShowDetails(tvShow.id)
     }
 
