@@ -217,7 +217,7 @@ class TvShowDetailsFragment : BaseFragment(), Injectable {
 
         //Handle Adapter OnClick event
         similarShowsAdapter.clickEvent.subscribe({
-            mainActivityNavigationController.navigateToTvShowDetails(it.id)
+            tvShowViewModel.handleOnSimilarTvShowListItemClick(it)
         })
     }
 
