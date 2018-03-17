@@ -43,24 +43,27 @@ class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRe
     }
 
 
-    private fun handleResults(response: TvShowListResponse) {
-        loadingObservable.value = NetworkLoadingStatus.SUCCESS
+    @VisibleForTesting
+    fun handleResults(response: TvShowListResponse) {
 
         if (page == startingPagination)
             tvShowsList = ArrayList()
 
-        if(response.totalPages <= page)
-            loadingObservable.value = NetworkLoadingStatus.ALL_PAGES_LOADED
+        loadingObservable.value = NetworkLoadingStatus.SUCCESS
 
         page++
 
-        tvShowsListResponse.value = response
+        if(response.totalPages <= page)
+            loadingObservable.value = NetworkLoadingStatus.ALL_PAGES_LOADED
 
-        loadingObservable.value = NetworkLoadingStatus.SUCCESS
+
+        tvShowsListResponse.value = response
 
         tvShowsList.addAll(response.showsList)
     }
-    private fun handleError(t: Throwable) {
+
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    fun handleError(t: Throwable) {
         loadingObservable.value = NetworkLoadingStatus.ERROR
     }
 
