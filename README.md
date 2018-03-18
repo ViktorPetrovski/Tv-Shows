@@ -1,4 +1,4 @@
-# Go-Movies   [![CircleCI](https://circleci.com/gh/victorpetrovski/Go-Movies/tree/dev.svg?style=svg)](https://circleci.com/gh/victorpetrovski/Go-Movies/tree/dev)
+# Tv Shows   [![CircleCI](https://circleci.com/gh/victorpetrovski/Go-Movies/tree/dev.svg?style=svg)](https://circleci.com/gh/victorpetrovski/Go-Movies/tree/dev)
 Android App for listing the most Popular Tv Shows using The Moive DB API (https://www.themoviedb.org/documentation/api)  
 
 This simple app is divided in two sections:
