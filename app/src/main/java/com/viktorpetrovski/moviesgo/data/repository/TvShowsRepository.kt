@@ -1,13 +1,11 @@
-package com.viktorpetrovski.moviesgo.repository
+package com.viktorpetrovski.moviesgo.data.repository
 
 import com.viktorpetrovski.moviesgo.data.remote.api.TvShowService
 import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
  * Created by Victor on 3/13/18.
  */
-@Singleton
 open class TvShowsRepository @Inject constructor(private val tvShowService: TvShowService){
 
     fun loadPopularTvShows(page : Int) = tvShowService.listPopularTvShows(page = page)

@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.viktorpetrovski.moviesgo.R
 import com.viktorpetrovski.moviesgo.di.Injectable
 import com.viktorpetrovski.moviesgo.ui.base.BaseFragment
+import com.viktorpetrovski.moviesgo.ui.base.MainActivityNavigationController
 import com.viktorpetrovski.moviesgo.util.NetworkLoadingStatus
 import com.viktorpetrovski.moviesgo.util.ext.observe
 import com.viktorpetrovski.moviesgo.util.view.CustomErrorItem
@@ -21,6 +22,9 @@ import javax.inject.Inject
  * A placeholder fragment containing a simple view.
  */
 class TvShowsListFragment : BaseFragment(), Injectable {
+
+    @Inject
+    lateinit var mainActivityNavigationController: MainActivityNavigationController
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory

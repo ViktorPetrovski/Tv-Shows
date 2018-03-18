@@ -1,7 +1,7 @@
 package com.viktorpetrovski.moviesgo.data.remote.api
 
 import com.viktorpetrovski.moviesgo.data.model.TvShow
-import com.viktorpetrovski.moviesgo.data.remote.apiModel.TvShowListResponse
+import com.viktorpetrovski.moviesgo.data.model.apiModel.TvShowListResponse
 import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.Path

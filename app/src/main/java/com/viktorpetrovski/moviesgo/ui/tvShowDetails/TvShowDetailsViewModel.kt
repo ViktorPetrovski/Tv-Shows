@@ -4,8 +4,8 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.VisibleForTesting
 import com.viktorpetrovski.moviesgo.data.model.TvShow
-import com.viktorpetrovski.moviesgo.data.remote.apiModel.TvShowListResponse
-import com.viktorpetrovski.moviesgo.repository.TvShowsRepository
+import com.viktorpetrovski.moviesgo.data.model.apiModel.TvShowListResponse
+import com.viktorpetrovski.moviesgo.data.repository.TvShowsRepository
 import com.viktorpetrovski.moviesgo.ui.base.MainActivityNavigationController
 import com.viktorpetrovski.moviesgo.util.NetworkLoadingStatus
 import com.viktorpetrovski.moviesgo.util.rx.SchedulerProvider

@@ -2,7 +2,7 @@ package com.viktorpetrovski.moviesgo.util;
 
 import com.google.gson.Gson;
 import com.viktorpetrovski.moviesgo.data.model.TvShow;
-import com.viktorpetrovski.moviesgo.data.remote.apiModel.TvShowListResponse;
+import com.viktorpetrovski.moviesgo.data.model.apiModel.TvShowListResponse;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;

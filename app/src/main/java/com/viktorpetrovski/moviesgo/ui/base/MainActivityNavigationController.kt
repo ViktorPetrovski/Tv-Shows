@@ -14,7 +14,7 @@ import javax.inject.Inject
  *
  */
 
-class MainActivityNavigationController @Inject constructor(private val mainActivity: MainActivity) {
+open class MainActivityNavigationController @Inject constructor(private val mainActivity: MainActivity) {
 
     private val containerId: Int = R.id.containerLayout
 

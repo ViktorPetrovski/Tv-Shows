@@ -4,8 +4,8 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.support.annotation.VisibleForTesting
 import com.viktorpetrovski.moviesgo.data.model.TvShow
-import com.viktorpetrovski.moviesgo.data.remote.apiModel.TvShowListResponse
-import com.viktorpetrovski.moviesgo.repository.TvShowsRepository
+import com.viktorpetrovski.moviesgo.data.model.apiModel.TvShowListResponse
+import com.viktorpetrovski.moviesgo.data.repository.TvShowsRepository
 import com.viktorpetrovski.moviesgo.ui.base.MainActivityNavigationController
 import com.viktorpetrovski.moviesgo.util.NetworkLoadingStatus
 import com.viktorpetrovski.moviesgo.util.rx.SchedulerProvider
@@ -16,7 +16,7 @@ import javax.inject.Inject
  * Created by Victor on 3/13/18.
  */
 
-class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRepository, private val mSchedulers: SchedulerProvider, private var mainActivityNavigationController: MainActivityNavigationController) : ViewModel() {
+open class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRepository, private val mSchedulers: SchedulerProvider, private var mainActivityNavigationController: MainActivityNavigationController) : ViewModel() {
 
     @VisibleForTesting
     var tvShowsListResponse = MutableLiveData<TvShowListResponse>()
@@ -64,8 +64,11 @@ class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRe
         tvShowsList.addAll(response.showsList)
     }
 
-    fun handleOnTvShowListItemClick(tvShow: TvShow) {
-        mainActivityNavigationController.navigateToTvShowDetails(tvShow.id)
+    fun handleOnTvShowListItemClick(tvShow: TvShow?) {
+        tvShow?.let {
+            mainActivityNavigationController.navigateToTvShowDetails(it.id)
+        }
+
     }
 
     @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)

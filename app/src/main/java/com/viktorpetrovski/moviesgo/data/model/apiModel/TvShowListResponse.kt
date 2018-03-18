@@ -1,4 +1,4 @@
-package com.viktorpetrovski.moviesgo.data.remote.apiModel
+package com.viktorpetrovski.moviesgo.data.model.apiModel
 
 import com.google.gson.annotations.SerializedName
 import com.viktorpetrovski.moviesgo.data.model.TvShow

@@ -26,9 +26,8 @@ object ImageLoader {
         GlideApp.with(imageView.context)
                 .asBitmap()
                 .centerCrop()
-                .placeholder(R.color.primary_dark_material_dark)
+                .placeholder(R.drawable.ic_tv_place_holder)
                 .load("$bannerImagePrefix$url")
-               // .error(R.drawable.ic_avatar_placeholder)
                 .into(imageView)
     }
 
@@ -43,9 +42,8 @@ object ImageLoader {
         GlideApp.with(imageView.context)
                 .asBitmap()
                 .centerInside()
-                .placeholder(R.color.primary_dark_material_dark)
+                .placeholder(R.drawable.ic_tv_place_holder)
                 .load("$posterImagePrefix$url")
-                // .error(R.drawable.ic_avatar_placeholder)
                 .into(imageView)
     }
 }
