@@ -11,8 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:nestedScrollingEnabled="false"
-        app:layout_behavior="com.viktorpetrovski.moviesgo.util.ScrollingCalendarBehavior"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -37,14 +35,14 @@
                 android:layout_height="?attr/actionBarSize"
                 app:expandedTitleTextAppearance="@android:color/transparent"
                 app:layout_collapseMode="pin"
-                app:layout_scrollFlags="snap"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
+
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.viktorpetrovski.moviesgo.util.view.MyNestedScrollView
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,8 +53,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:nestedScrollingEnabled="false">
+            android:layout_height="match_parent">
 
             <android.support.v4.widget.ContentLoadingProgressBar
                 android:id="@+id/progresss_waiting"
@@ -81,7 +78,7 @@
         </FrameLayout>
 
 
-    </com.viktorpetrovski.moviesgo.util.view.MyNestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
 </android.support.design.widget.CoordinatorLayout>

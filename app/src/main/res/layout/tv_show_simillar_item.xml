@@ -5,7 +5,6 @@
     android:layout_width="@dimen/similar_tv_show_banner_width"
     android:layout_height="@dimen/similar_tv_show_banner_height"
     android:layout_margin="2dp"
-    android:focusableInTouchMode="true"
     app:cardCornerRadius="6dp">
 
     <android.support.constraint.ConstraintLayout

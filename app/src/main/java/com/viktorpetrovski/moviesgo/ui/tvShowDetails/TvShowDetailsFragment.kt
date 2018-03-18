@@ -25,6 +25,10 @@ import ru.alexbykov.nopaginate.paginate.Paginate
 import ru.alexbykov.nopaginate.paginate.PaginateBuilder
 import javax.inject.Inject
 
+
+
+
+
 /**
  * A simple [Fragment] subclass.
  */
@@ -76,7 +80,6 @@ class TvShowDetailsFragment : BaseFragment(), Injectable {
             tvShowViewModel.getTvShowDetails()
         }
 
-
         if(savedInstanceState != null){
             //Fragment's been re-created we need to re-provide the NavigationController
             tvShowViewModel.mainActivityNavigationController = mainActivityNavigationController
@@ -95,6 +98,7 @@ class TvShowDetailsFragment : BaseFragment(), Injectable {
         hideToolbarTitleWhenExpanded()
 
     }
+
 
     private fun observeMainContentStatus() {
         tvShowViewModel.loadingObservable.observe(this) {
