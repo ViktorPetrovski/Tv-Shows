@@ -27,9 +27,12 @@ Tv Shows List           |  Tv Show Details
 ## Architecture
 We are going to use the MVVM pattern with the help of Google Architecture Components.
 
-1. **Model**: We are going to use Repositories which will be held responsible for providing data to the ViewModel.
-2. **View**: The View will observe the changes in the ViewModel and display the changes accordingly it also informs the ViewModel about the user’s actions .
-3. **ViewModel**: The ViewModel retrieves the necessary data from the Model (Repository), applies the UI logic and then exposes relevant data for the View to consume. The ViewModel exposes the data via Observables (LiveData).
+### Model
+  We are going to use Repositories which will be held responsible for providing data to the ViewModel.
+### View
+  The View will observe the changes in the ViewModel and display the changes accordingly it also informs the ViewModel about the user’s actions.
+### ViewModel
+  The ViewModel retrieves the necessary data from the Model (Repository), applies the UI logic and then exposes relevant data for the View to consume. The ViewModel exposes the data via Observables (LiveData).
 
 <p align="center">
   <img src="https://github.com/victorpetrovski/Go-Movies/blob/master/Architecture.png?raw=true">
