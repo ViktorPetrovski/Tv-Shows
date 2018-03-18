@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import android.widget.Toast
 import com.viktorpetrovski.moviesgo.R
 import com.viktorpetrovski.moviesgo.di.Injectable
 import com.viktorpetrovski.moviesgo.ui.base.BaseFragment
@@ -38,6 +39,8 @@ class TvShowDetailsFragment : BaseFragment(), Injectable {
 
     @Inject
     lateinit var similarShowsAdapter: SimilarShowsAdapter
+
+    @Inject lateinit var linearLayoutManager: LinearLayoutManager
 
     private lateinit var tvShowViewModel: TvShowDetailsViewModel
 
@@ -202,8 +205,14 @@ class TvShowDetailsFragment : BaseFragment(), Injectable {
     private fun setUpRecyclerView() {
         ViewCompat.setNestedScrollingEnabled(rv_similar_tv_show, false)
 
-        rv_similar_tv_show.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+
+        rv_similar_tv_show.layoutManager = linearLayoutManager
         rv_similar_tv_show.adapter = similarShowsAdapter
+
+        rv_similar_tv_show.setOnClickListener {
+            Toast.makeText(context,"Rv CLicked",Toast.LENGTH_LONG).show()
+        }
 
 
         paginate = PaginateBuilder()

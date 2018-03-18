@@ -1,10 +1,12 @@
 package com.viktorpetrovski.moviesgo.ui.tvShowDetails;
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule;
+import android.arch.lifecycle.Observer;
 
 import com.viktorpetrovski.moviesgo.data.model.TvShow;
-import com.viktorpetrovski.moviesgo.repository.TvShowsRepository;
+import com.viktorpetrovski.moviesgo.data.repository.TvShowsRepository;
 import com.viktorpetrovski.moviesgo.ui.base.MainActivityNavigationController;
+import com.viktorpetrovski.moviesgo.util.NetworkLoadingStatus;
 import com.viktorpetrovski.moviesgo.util.TvShowUtil;
 import com.viktorpetrovski.moviesgo.util.rx.TvShowsSchedulerProviderTest;
 
@@ -32,6 +34,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class TvShowDetailsViewModelTest {
 
+
     @Rule
     public InstantTaskExecutorRule instantExecutorRule = new InstantTaskExecutorRule();
 
@@ -41,12 +44,31 @@ public class TvShowDetailsViewModelTest {
     @Mock
     MainActivityNavigationController mainActivityNavigationController;
 
+    @Mock
+    Observer<NetworkLoadingStatus> networkStatusObserver;
+
+
     TvShowDetailsViewModel viewModel;
 
     @Before
     public void setUp() {
         viewModel = new TvShowDetailsViewModel(tvShowsRepository, new TvShowsSchedulerProviderTest(),mainActivityNavigationController);
+        viewModel.getLoadingObservable().observeForever(networkStatusObserver);
     }
+
+    @Test
+    public void testTvShowRepositoryCall() throws UnsupportedEncodingException {
+        TvShow tvShow = TvShowUtil.getTvShowDetails(getClass().getClassLoader());
+        when(tvShowsRepository.loadTvShowDetails(tvShow.getId())).thenReturn(Observable.just(tvShow));
+
+        viewModel.setTvShowId(tvShow.getId());
+        viewModel.getTvShowDetails();
+
+        verify(networkStatusObserver).onChanged(NetworkLoadingStatus.LOADING);
+        verify(tvShowsRepository).loadTvShowDetails(tvShow.getId());
+        verify(networkStatusObserver).onChanged(NetworkLoadingStatus.SUCCESS);
+    }
+
 
     @Test
     public void generateTestForLoadingTvShowDetails() throws Exception{
