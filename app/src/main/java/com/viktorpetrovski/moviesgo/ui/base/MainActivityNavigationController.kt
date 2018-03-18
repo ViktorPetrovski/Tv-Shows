@@ -32,7 +32,7 @@ open class MainActivityNavigationController @Inject constructor(private val main
                 .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right, R.anim.enter_from_left, R.anim.exit_to_right)
                 .add(containerId, TvShowDetailsFragment.newInstance(tvShowId) , tag)
                 .addToBackStack(null)
-                .commitAllowingStateLoss()
+                .commit()
     }
 
     fun popBack() = mainActivity.onBackPressed()

@@ -16,7 +16,7 @@ import javax.inject.Inject
  * Created by Victor on 3/13/18.
  */
 
-open class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRepository, private val mSchedulers: SchedulerProvider, private var mainActivityNavigationController: MainActivityNavigationController) : ViewModel() {
+open class TvShowsListViewModel @Inject constructor(private val repository: TvShowsRepository, private val mSchedulers: SchedulerProvider, var mainActivityNavigationController: MainActivityNavigationController) : ViewModel() {
 
     @VisibleForTesting
     var tvShowsListResponse = MutableLiveData<TvShowListResponse>()

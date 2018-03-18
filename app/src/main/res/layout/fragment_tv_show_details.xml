@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:nestedScrollingEnabled="false"
+        app:layout_behavior="com.viktorpetrovski.moviesgo.util.ScrollingCalendarBehavior"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.design.widget.CollapsingToolbarLayout

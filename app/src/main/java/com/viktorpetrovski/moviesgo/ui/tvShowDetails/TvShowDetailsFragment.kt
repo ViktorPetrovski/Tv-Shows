@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.View
-import android.widget.Toast
 import com.viktorpetrovski.moviesgo.R
 import com.viktorpetrovski.moviesgo.di.Injectable
 import com.viktorpetrovski.moviesgo.ui.base.BaseFragment
@@ -66,7 +65,6 @@ class TvShowDetailsFragment : BaseFragment(), Injectable {
 
     override fun getLayout() = R.layout.fragment_tv_show_details
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -76,6 +74,12 @@ class TvShowDetailsFragment : BaseFragment(), Injectable {
         arguments?.getLong(ARG_TVSHOW_ID)?.let {
             tvShowViewModel.setTvShowId(it)
             tvShowViewModel.getTvShowDetails()
+        }
+
+
+        if(savedInstanceState != null){
+            //Fragment's been re-created we need to re-provide the NavigationController
+            tvShowViewModel.mainActivityNavigationController = mainActivityNavigationController
         }
 
         setUpRecyclerView()
@@ -203,17 +207,14 @@ class TvShowDetailsFragment : BaseFragment(), Injectable {
     }
 
     private fun setUpRecyclerView() {
-        ViewCompat.setNestedScrollingEnabled(rv_similar_tv_show, false)
 
         linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
 
         rv_similar_tv_show.layoutManager = linearLayoutManager
         rv_similar_tv_show.adapter = similarShowsAdapter
 
-        rv_similar_tv_show.setOnClickListener {
-            Toast.makeText(context,"Rv CLicked",Toast.LENGTH_LONG).show()
-        }
 
+        ViewCompat.setNestedScrollingEnabled(rv_similar_tv_show, false)
 
         paginate = PaginateBuilder()
                 .with(rv_similar_tv_show)

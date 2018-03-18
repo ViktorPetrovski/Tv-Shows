@@ -45,9 +45,16 @@ class TvShowsListFragment : BaseFragment(), Injectable {
 
     override fun getLayout() = R.layout.fragment_movies_list
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         tvShowsListViewModel = ViewModelProviders.of(this, viewModelFactory).get(TvShowsListViewModel::class.java)
+
+        if(savedInstanceState != null){
+            //Fragment's been re-created we need to re-provide the NavigationController
+            tvShowsListViewModel.mainActivityNavigationController = mainActivityNavigationController
+        }
 
         setUpRecyclerView()
 
@@ -118,4 +125,6 @@ class TvShowsListFragment : BaseFragment(), Injectable {
         super.onDestroy()
         paginate.unbind()
     }
+
+
 }

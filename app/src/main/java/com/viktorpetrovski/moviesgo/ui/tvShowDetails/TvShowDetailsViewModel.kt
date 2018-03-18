@@ -16,7 +16,7 @@ import javax.inject.Inject
  */
 class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepository: TvShowsRepository,
                                                  private val mSchedulers : SchedulerProvider,
-                                                 private var mainActivityNavigationController: MainActivityNavigationController) : ViewModel() {
+                                                 var mainActivityNavigationController: MainActivityNavigationController) : ViewModel() {
 
     var tvShow = MutableLiveData<TvShow>()
 
@@ -90,8 +90,6 @@ class TvShowDetailsViewModel @Inject constructor(private val tvShowsListingRepos
     fun handleOnSimilarTvShowListItemClick(tvShow : TvShow){
         mainActivityNavigationController.navigateToTvShowDetails(tvShow.id)
     }
-
-
 
     fun createGenresString(tvShow: TvShow): String {
 
