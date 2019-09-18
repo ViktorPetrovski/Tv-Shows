@@ -43,5 +43,5 @@ We are going to use the MVVM pattern with the help of Google Architecture Compon
 2. **di**: Dependency providing classes using Dagger2.
 3. **ui**: View classes along with their corresponding ViewModel.
 4. **utils**: Utility classes.
-
+ 
 
